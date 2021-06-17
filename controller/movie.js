@@ -7,12 +7,18 @@ router.get('/', async function(req, res, next) {
     const title = req.query.title;
     const page = req.query.page || 1;
     if (title) {
-        res.json(await movieServices.searchMovieByTitle(title, page));
+        const result = await movieServices.searchMovieByTitle(title, page);
+        if (result.error) {
+            res.status(400);
+        } else {
+            res.status(200);
+        }
+        res.json(result);
     } else {
-        res.status(400)
+        res.status(400);
         res.json({
             error: "Input movie title in query"
-        })   
+        });
     } 
   } catch (err) {
     console.error(`Error while getting programming languages `, err.message);
