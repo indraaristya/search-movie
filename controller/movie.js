@@ -40,7 +40,7 @@ router.get('/detail', async function(req, res) {
       result = await movieServices.getMovieDetailsByTitle(title);
     } else {
       res.status(400);
-      res.json({
+      return res.send({
           error: "Please provide the ID or title of the movie"
       });
     }
