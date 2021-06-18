@@ -1,11 +1,6 @@
-const express = require('express');
-const app = express();
+const app = require("./app");
+
 const port = 3000;
-
-app.get('/', (req, res) => {
-  res.json({'message': 'ok'});
-})
-
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`)
 });
