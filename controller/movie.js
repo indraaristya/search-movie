@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const movieServices = require('../services/movie');
 
-router.get('/', async function(req, res, next) {
+router.get('/search', async function(req, res, next) {
   try {
     const title = req.query.title;
     const page = parseInt(req.query.page) || 1;

@@ -72,7 +72,7 @@ describe('Search movie', () => {
             .mockImplementation(async () => returnValue);
 
         const res = await request(app)
-            .get('/movie?title=Batman')
+            .get('/movie/search?title=Batman')
         expect(res.statusCode).toEqual(200)
         expect(res.body).toMatchSchema(searchMovieSchema)
         expect(spy).toHaveBeenCalledWith("Batman", 1);
@@ -136,7 +136,7 @@ describe('Search movie', () => {
             .mockImplementation(async () => returnValue);
 
         const res = await request(app)
-            .get('/movie?title=Batman&page=2')
+            .get('/movie/search?title=Batman&page=2')
         expect(res.statusCode).toEqual(200)
         expect(res.body).toMatchSchema(searchMovieSchema)
         expect(spy).toHaveBeenLastCalledWith("Batman", 2);
@@ -160,7 +160,7 @@ describe('Search movie', () => {
             .mockImplementation(async () => returnValue);
 
         const res = await request(app)
-            .get('/movie?title=a')
+            .get('/movie/search?title=a')
         expect(res.statusCode).toEqual(400)
         expect(res.body).toMatchSchema(errorMovieSchema)
         expect(spy).toHaveBeenCalledWith("a", 1);
@@ -184,7 +184,7 @@ describe('Search movie', () => {
             .mockImplementation(async () => returnValue);
             
         const res = await request(app)
-            .get('/movie?titles=a')
+            .get('/movie/search?titles=a')
         expect(res.statusCode).toEqual(400)
         expect(res.body).toMatchSchema(errorMovieSchema)
     })
