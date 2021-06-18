@@ -22,7 +22,43 @@ async function searchMovieByTitle(title, page = 1){
     }
 }
 
+async function getMovieDetailsById(movieId) {
+    try {
+        const response = await axios.get(`${BASE_URL}/?apikey=${API_KEY}&i=${movieId}`);
+        
+        if (response.data.Response && response.data.Response == "True") {
+            return {
+                data: response.data
+            }
+        }
+        return {
+            error: response.data.Error || `Error when retrive movie with ID ${movieId}`
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function getMovieDetailsByTitle(movieTitle) {
+    try {
+        const response = await axios.get(`${BASE_URL}/?apikey=${API_KEY}&t=${movieTitle}`);
+        
+        if (response.data.Response && response.data.Response == "True") {
+            return {
+                data: response.data
+            }
+        }
+        return {
+            error: response.data.Error || `Error when retrive movie with title ${movieTitle}`
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 module.exports = {
-    searchMovieByTitle
+    searchMovieByTitle,
+    getMovieDetailsById,
+    getMovieDetailsByTitle
 }
