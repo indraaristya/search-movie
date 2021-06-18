@@ -5,7 +5,7 @@ const movieServices = require('../services/movie');
 router.get('/', async function(req, res, next) {
   try {
     const title = req.query.title;
-    const page = req.query.page || 1;
+    const page = parseInt(req.query.page) || 1;
     if (title) {
         const result = await movieServices.searchMovieByTitle(title, page);
         if (result.error) {
