@@ -21,8 +21,11 @@ router.get('/', async function(req, res, next) {
         });
     } 
   } catch (err) {
-    console.error(`Error while getting programming languages `, err.message);
-    next(err);
+    console.error(err.message);
+    res.status(500);
+    res.json({
+      error: "Can't retrieve movie list"
+    })
   }
 });
 
