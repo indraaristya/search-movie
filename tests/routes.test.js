@@ -75,6 +75,7 @@ describe('Search movie', () => {
             .get('/movie?title=Batman')
         expect(res.statusCode).toEqual(200)
         expect(res.body).toMatchSchema(searchMovieSchema)
+        expect(spy).toHaveBeenCalledWith("Batman", 1);
     })
 
     it('should able to get error message if input invalid title', async () => {
@@ -98,6 +99,7 @@ describe('Search movie', () => {
             .get('/movie?title=a')
         expect(res.statusCode).toEqual(400)
         expect(res.body).toMatchSchema(errorMovieSchema)
+        expect(spy).toHaveBeenCalledWith("a", 1);
     })
 
     it('should able to get error message if hit endpoint without query title', async () => {
