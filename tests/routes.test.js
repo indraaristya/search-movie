@@ -189,4 +189,359 @@ describe('Search movie', () => {
         expect(res.body).toMatchSchema(errorMovieSchema)
     })
 })
+
+describe('Get details movie', () => {
+    it('should able to get details movie by valid title', async () => {
+        const returnValue = {
+            data: {
+                Title: "Falsche Liebe",
+                Year: "2008",
+                Rated: "N/A",
+                Released: "N/A",
+                Season: "N/A",
+                Episode: "N/A",
+                Runtime: "1 h 29 min",
+                Genre: "Crime",
+                Director: "Julian Pölsler",
+                Writer: "Katrin Bühlig, Doris Gercke",
+                Actors: "Hannelore Hoger, Rudolf Kowalski, Devid Striesow, Peter Simonischek",
+                Plot: "N/A",
+                Language: "N/A",
+                Country: "N/A",
+                Awards: "N/A",
+                Poster: "https://m.media-amazon.com/images/M/MV5BMTI5MzU2NDA1M15BMl5BanBnXkFtZTcwMTE2MjY4Mw@@._V1_SX300.jpg",
+                Ratings: [
+                    {
+                        Source: "Internet Movie Database",
+                        Value: "7.9/10"
+                    }
+                ],
+                Metascore: "N/A",
+                imdbRating: "7.9",
+                imdbVotes: "22",
+                imdbID: "tt1201601",
+                seriesID: "N/A",
+                Type: "episode",
+                Response: "True" 
+            }
+        }
+        
+        const detailsMovieSchema = {
+            properties: {
+                data: {
+                    type: "object",
+                    properties: {
+                        Title: {
+                            type: "string"
+                        },
+                        Year: {
+                            type: "string"
+                        },
+                        Rated: {
+                            type: "string"
+                        },
+                        Released: {
+                            type: "string"
+                        },
+                        Season: {
+                            type: "string"
+                        },
+                        Episode: {
+                            type: "string"
+                        },
+                        Runtime: {
+                            type: "string"
+                        },
+                        Genre: {
+                            type: "string"
+                        },
+                        Director: {
+                            type: "string"
+                        },
+                        Writer: {
+                            type: "string"
+                        },
+                        Actors: {
+                            type: "string"
+                        },
+                        Plot: {
+                            type: "string"
+                        },
+                        Language: {
+                            type: "string"
+                        },
+                        Country: {
+                            type: "string"
+                        },
+                        Awards: {
+                            type: "string"
+                        },
+                        Poster: {
+                            type: "string"
+                        },
+                        Ratings: {
+                            type: "array",
+                            item: [{
+                                type: "object",
+                                properties: {
+                                    Source: {
+                                        type: "string"
+                                    },
+                                    Value: {
+                                        type: "string"
+                                    }
+                                }
+                            }]
+                        },
+                        Metascore: {
+                            type: "string"
+                        },
+                        imdbRating: {
+                            type: "string"
+                        },
+                        imdbVotes: {
+                            type: "string"
+                        },
+                        imdbID: {
+                            type: "string"
+                        },
+                        seriesID: {
+                            type: "string"
+                        },
+                        Type: {
+                            type: "string"
+                        },
+                        Response: {
+                            type: "string"
+                        }
+                    },
+                    required: ['Title', 'Year', 'imdbID']
+                }
+            },
+            required: ['data'],
+        };
+
+        const spy = jest
+            .spyOn(movieService, 'getMovieDetailsByTitle')
+            .mockImplementation(async () => returnValue);
+
+        const res = await request(app)
+            .get('/movie/detail?title=Falsche Liebe')
+        expect(res.statusCode).toEqual(200)
+        expect(res.body).toMatchSchema(detailsMovieSchema)
+        expect(spy).toHaveBeenCalledWith("Falsche Liebe");
+    })
+
+    it('should able to get details movie by valid id', async () => {
+        const returnValue = {
+            data: {
+                Title: "Falsche Liebe",
+                Year: "2008",
+                Rated: "N/A",
+                Released: "N/A",
+                Season: "N/A",
+                Episode: "N/A",
+                Runtime: "1 h 29 min",
+                Genre: "Crime",
+                Director: "Julian Pölsler",
+                Writer: "Katrin Bühlig, Doris Gercke",
+                Actors: "Hannelore Hoger, Rudolf Kowalski, Devid Striesow, Peter Simonischek",
+                Plot: "N/A",
+                Language: "N/A",
+                Country: "N/A",
+                Awards: "N/A",
+                Poster: "https://m.media-amazon.com/images/M/MV5BMTI5MzU2NDA1M15BMl5BanBnXkFtZTcwMTE2MjY4Mw@@._V1_SX300.jpg",
+                Ratings: [
+                    {
+                        Source: "Internet Movie Database",
+                        Value: "7.9/10"
+                    }
+                ],
+                Metascore: "N/A",
+                imdbRating: "7.9",
+                imdbVotes: "22",
+                imdbID: "tt1201601",
+                seriesID: "N/A",
+                Type: "episode",
+                Response: "True" 
+            }
+        }
+        
+        const detailsMovieSchema = {
+            properties: {
+                data: {
+                    type: "object",
+                    properties: {
+                        Title: {
+                            type: "string"
+                        },
+                        Year: {
+                            type: "string"
+                        },
+                        Rated: {
+                            type: "string"
+                        },
+                        Released: {
+                            type: "string"
+                        },
+                        Season: {
+                            type: "string"
+                        },
+                        Episode: {
+                            type: "string"
+                        },
+                        Runtime: {
+                            type: "string"
+                        },
+                        Genre: {
+                            type: "string"
+                        },
+                        Director: {
+                            type: "string"
+                        },
+                        Writer: {
+                            type: "string"
+                        },
+                        Actors: {
+                            type: "string"
+                        },
+                        Plot: {
+                            type: "string"
+                        },
+                        Language: {
+                            type: "string"
+                        },
+                        Country: {
+                            type: "string"
+                        },
+                        Awards: {
+                            type: "string"
+                        },
+                        Poster: {
+                            type: "string"
+                        },
+                        Ratings: {
+                            type: "array",
+                            item: [{
+                                type: "object",
+                                properties: {
+                                    Source: {
+                                        type: "string"
+                                    },
+                                    Value: {
+                                        type: "string"
+                                    }
+                                }
+                            }]
+                        },
+                        Metascore: {
+                            type: "string"
+                        },
+                        imdbRating: {
+                            type: "string"
+                        },
+                        imdbVotes: {
+                            type: "string"
+                        },
+                        imdbID: {
+                            type: "string"
+                        },
+                        seriesID: {
+                            type: "string"
+                        },
+                        Type: {
+                            type: "string"
+                        },
+                        Response: {
+                            type: "string"
+                        }
+                    },
+                    required: ['Title', 'Year', 'imdbID']
+                }
+            },
+            required: ['data'],
+        };
+
+        const spy = jest
+            .spyOn(movieService, 'getMovieDetailsById')
+            .mockImplementation(async () => returnValue);
+
+        const res = await request(app)
+            .get('/movie/detail?id=tt1201601')
+        expect(res.statusCode).toEqual(200)
+        expect(res.body).toMatchSchema(detailsMovieSchema)
+        expect(spy).toHaveBeenLastCalledWith("tt1201601");
+    })
+
+    it('should able to get error message if get details movie by invalid title', async () => {
+        const returnValue = {
+            error: "Movie not found!"
+        }
+        const errorDetailsSchema = {
+            properties: {
+                error: {
+                    type: "string"
+                }
+            },
+            required: ['error'],
+        };
+
+        const spy = jest
+            .spyOn(movieService, 'getMovieDetailsByTitle')
+            .mockImplementation(async () => returnValue);
+
+        const res = await request(app)
+            .get('/movie/detail?title=al;sa;d')
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toMatchSchema(errorDetailsSchema)
+        expect(spy).toHaveBeenCalledWith("al;sa;d");
+    })
+
+    it('should able to get error message if get details movie by invalid id', async () => {
+        const returnValue = {
+            error: "Incorrect IMDb ID."
+        }
+        const errorDetailsSchema = {
+            properties: {
+                error: {
+                    type: "string"
+                }
+            },
+            required: ['error'],
+        };
+
+        const spy = jest
+            .spyOn(movieService, 'getMovieDetailsById')
+            .mockImplementation(async () => returnValue);
+
+        const res = await request(app)
+            .get('/movie/detail?id=1')
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toMatchSchema(errorDetailsSchema)
+        expect(spy).toHaveBeenCalledWith("1");
+    })
+
+    it('should able to get error message if get details movie by invalid query params', async () => {
+        const returnValue = {
+            error: "Please provide the ID or title of the movie"
+        }
+        const errorDetailsSchema = {
+            properties: {
+                error: {
+                    type: "string"
+                }
+            },
+            required: ['error'],
+        };
+
+        const spy = jest
+            .spyOn(movieService, 'getMovieDetailsById')
+            .mockImplementation(async () => returnValue);
+
+        const res = await request(app)
+            .get('/movie/detail?ids=1')
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toMatchSchema(errorDetailsSchema)
+    })
+})
   
