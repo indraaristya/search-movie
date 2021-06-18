@@ -1,5 +1,6 @@
 const request = require('supertest');
 const app = require('../app');
+const movieService = require('../services/movie');
 const { matchers } = require('jest-json-schema');
 expect.extend(matchers);;
 
@@ -14,6 +15,19 @@ describe('Home page', () => {
 
 describe('Search movie', () => {
     it('should able to get movie with valid title', async () => {
+        const returnValue = {
+            data: [{
+                Title: "Batman Begins",
+                Year: "2005",
+                imdbID: "tt0372784",
+                Type: "movie",
+                Poster: "https://m.media-amazon.com/images/M/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLTg3YjEtMDQyM2ZjYzQ5YWFkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
+            }],
+            count: 1,
+            page: 1,
+            totalPage: 1
+        }
+        
         const searchMovieSchema = {
             properties: {
                 data: {
@@ -42,10 +56,21 @@ describe('Search movie', () => {
                 },
                 totalPage: {
                     type: "number"
+                },
+                count: {
+                    type: "number"
+                },
+                page: {
+                    type: "number"
                 }
             },
-            required: ['data', 'totalPage'],
+            required: ['data', 'totalPage', 'count', 'page'],
         };
+
+        const spy = jest
+            .spyOn(movieService, 'searchMovieByTitle')
+            .mockImplementation(async () => returnValue);
+
         const res = await request(app)
             .get('/movie?title=Batman')
         expect(res.statusCode).toEqual(200)
@@ -53,6 +78,9 @@ describe('Search movie', () => {
     })
 
     it('should able to get error message if input invalid title', async () => {
+        const returnValue = {
+            error: "Too much value."
+        }
         const errorMovieSchema = {
             properties: {
                 error: {
@@ -61,6 +89,11 @@ describe('Search movie', () => {
             },
             required: ['error'],
         };
+
+        const spy = jest
+            .spyOn(movieService, 'searchMovieByTitle')
+            .mockImplementation(async () => returnValue);
+            
         const res = await request(app)
             .get('/movie?title=a')
         expect(res.statusCode).toEqual(400)
