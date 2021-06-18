@@ -93,9 +93,32 @@ describe('Search movie', () => {
         const spy = jest
             .spyOn(movieService, 'searchMovieByTitle')
             .mockImplementation(async () => returnValue);
-            
+
         const res = await request(app)
             .get('/movie?title=a')
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toMatchSchema(errorMovieSchema)
+    })
+
+    it('should able to get error message if hit endpoint without query title', async () => {
+        const returnValue = {
+            error: "Input movie title in query"
+        }
+        const errorMovieSchema = {
+            properties: {
+                error: {
+                    type: "string"
+                }
+            },
+            required: ['error'],
+        };
+
+        const spy = jest
+            .spyOn(movieService, 'searchMovieByTitle')
+            .mockImplementation(async () => returnValue);
+            
+        const res = await request(app)
+            .get('/movie?titles=a')
         expect(res.statusCode).toEqual(400)
         expect(res.body).toMatchSchema(errorMovieSchema)
     })
