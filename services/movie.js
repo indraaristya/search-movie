@@ -6,6 +6,8 @@ async function searchMovieByTitle(title, page = 1){
         if (response.data.Response && response.data.Response == "True") {
             return {
                 data: response.data.Search,
+                count: response.data.Search.length,
+                page,
                 totalPage: Math.ceil(response.data.totalResults/10)
             }
         } else {
